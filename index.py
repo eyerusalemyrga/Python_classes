@@ -11,6 +11,7 @@ class Account:
         self.is_frozen=False
         self.is_closed=False
         self.transactions=[]
+        self.loan_request_amount=[]
         
     def deposit(self,amount):
         if self.is_frozen==False and self.is_closed==False:
@@ -52,10 +53,11 @@ class Account:
            return balance
             
   
-    def request_loan(self):
+    def request_loan(self, loan_amount):
         if self.is_frozen==False and self.is_closed==False: 
            if self.balance>=12000:
-            self.transactions.append()
+            self.loan+=self.loan_amount
+            self.transactions.append(loan_amount)
             return f"{self.loan} was given to you."
            else:
             return f"loan is only given for those who have 12000birr in their account"
