@@ -5,9 +5,9 @@ class Transaction:
         self.narration = narration  
         self.amount = amount        
         self.transaction_type = transaction_type  
-class Account(Transaction):
+class Account():
     interest_rate= 0.05
-    def __init__(self,account_holder, account_number, date_time, narration, amount, transaction_type):
+    def __init__(self,account_holder, account_number):
         self._account_number = account_number
         self._account_holder = account_holder
         self._transactions = []
@@ -15,7 +15,7 @@ class Account(Transaction):
         self._is_frozen = False
         self._minimum_balance = 0.0
         self._is_closed = False
-        super().__init__(date_time, narration, amount, transaction_type)
+        
     def get_account_number(self):
         return self._account_number
 
@@ -70,15 +70,15 @@ class Account(Transaction):
     def transfer_funds(self, amount, recipient_account):
         if self._is_frozen:
             return "Your account is frozen."
-        elif self._is_closed or recipient_account._is_closed:
-            return "One of the accounts is closed"
+        elif self._is_closed:
+            return " accounts is closed"
         elif amount <= 0:
             return "Transfer amount must be positive."
         elif amount > self.get_balance():
             return "Insufficient funds."
         else:
             self._add_transaction(f"Transfer to {recipient_account}", amount, 'debit')
-            recipient_account._add_transaction(f"Transfer from {self.get_account_holder()}", amount, 'credit')
+            
             return f"Your new balance: {self.get_balance():.2f}"
 
 
@@ -107,23 +107,11 @@ class Account(Transaction):
         return f"Remaining loan balance: {self._loan_balance:.2f}"
 
     
-    def view_account_details(self):
-        details = (
-            f"Account Number: {self._account_number}"
-            f"Account Holder: {self._account_holder}\n"
-            f"Current Balance: {self.get_balance():.2f}\n"
-            f"Loan Balance: {self._loan_balance:.2f}\n"
-            )
-        return details
-
-    
     def account_statement(self):
-        bank_statement = []
-        for transaction in self._transactions:
-            bank_statement.append(transaction)
-        return bank_statement
-
-    
+       
+        for transactions in self._transactions:
+            print(transactions)
+        print(f"Current Balance: {self.get_balance()}")
     def apply_interest(self):
         if self._is_closed or self._is_frozen:
             return "Your account is closed or frozen."
@@ -152,3 +140,4 @@ class Account(Transaction):
         self._loan_balance = 0.0
         self._is_closed = True
         return "Account closed."
+
