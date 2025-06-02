@@ -105,6 +105,15 @@ class Account():
         self._loan_balance -= amount
         self._add_transaction("Loan repayment", amount, 'debit')
         return f"Remaining loan balance: {self._loan_balance:.2f}"
+     def view_account_details(self):
+        details = (
+            f"Account Number: {self._account_number}"
+            f"Account Holder: {self._account_holder}"
+            f"Current Balance: {self.get_balance():.2f}"
+            f"Loan Balance: {self._loan_balance:.2f}"
+           
+        )
+        return details
 
     
     def account_statement(self):
